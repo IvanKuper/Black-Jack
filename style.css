@@ -411,3 +411,17 @@ button.danger {
   .card .suit-center { font-size: 1.3rem; }
   button { min-width: 100px; padding: 0.5rem 0.7rem; font-size: 0.85rem; }
 }
+
+/* Keep action buttons readable over the background photo */
+.controls, .bet-panel {
+  background: rgba(10, 15, 12, 0.75);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 0.6rem;
+}
+@media (max-width: 768px) {
+  body { background-attachment: scroll; }
+  .table-wrap { padding: 1rem 0.5rem 3rem; }
+  .controls { width: 100%; }
+  .controls button { flex: 1 1 40%; min-height: 44px; }
+}
