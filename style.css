@@ -15,12 +15,9 @@
 
 body {
   font-family: "Montserrat", "Trebuchet MS", "Lucida Sans Unicode", sans-serif;
-  background: radial-gradient(ellipse at top, var(--felt-light), var(--felt-dark) 70%),
-    url("./bg.jpg");
-  background-blend-mode: overlay;
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  /* dark felt over the photo so its cards stay a faint texture behind the controls */
+  background: radial-gradient(ellipse at top, rgba(20, 90, 55, 0.86), rgba(6, 30, 18, 0.95) 70%),
+    url("./bg.jpg") center / cover fixed no-repeat;
   color: white;
   min-height: 100vh;
   display: flex;
