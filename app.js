@@ -59,10 +59,14 @@
   }
 
   function saveState() {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ chips: state.chips, streak: state.streak, soundOn: state.soundOn })
-    );
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ chips: state.chips, streak: state.streak, soundOn: state.soundOn })
+      );
+    } catch (e) {
+      /* storage blocked: the game still works, it just does not remember */
+    }
   }
 
   function buildDeck() {
@@ -144,10 +148,11 @@
   };
 
   // ---------- Rendering ----------
-  function renderCard(card, faceDown, index) {
+  function renderCard(card, faceDown, index, still) {
     const div = document.createElement("div");
     div.className = "card" + (card.color === "red" ? " red" : "");
     if (faceDown) div.classList.add("facedown");
+    if (still) div.classList.add("still"); // already on the table: only new cards animate in
     div.style.setProperty("--rot", `${(index % 2 === 0 ? -1 : 1) * (2 + index)}deg`);
     div.style.setProperty("--delay", `${index * 0.12}s`);
     if (!faceDown) {
@@ -161,13 +166,15 @@
   }
 
   function renderHands(revealDealer) {
+    const shownP = els.playerHand.children.length;
+    const shownD = els.dealerHand.children.length;
     els.playerHand.innerHTML = "";
-    playerHand.forEach((c, i) => els.playerHand.appendChild(renderCard(c, false, i)));
+    playerHand.forEach((c, i) => els.playerHand.appendChild(renderCard(c, false, i, i < shownP)));
 
     els.dealerHand.innerHTML = "";
     dealerHand.forEach((c, i) => {
       const hideThis = !revealDealer && i === 1;
-      els.dealerHand.appendChild(renderCard(c, hideThis, i));
+      els.dealerHand.appendChild(renderCard(c, hideThis, i, i < shownD));
     });
 
     els.playerSum.textContent = String(handValue(playerHand));
@@ -436,6 +443,7 @@
     els.soundToggleBtn.innerHTML = state.soundOn
       ? '<i class="fa-solid fa-volume-high"></i>'
       : '<i class="fa-solid fa-volume-xmark"></i>';
+    els.soundToggleBtn.setAttribute("aria-pressed", String(state.soundOn));
     saveState();
     if (state.soundOn) sounds.chip();
   }
@@ -458,10 +466,10 @@
       if (e.key.toLowerCase() === "h") hit();
       if (e.key.toLowerCase() === "s") stand();
       if (e.key.toLowerCase() === "d") doubleDown();
-    } else if (phase === "betting" && e.key === "Enter") {
-      deal();
-    } else if (phase === "over" && e.key === "Enter") {
-      newRound();
+    } else if (e.key === "Enter" && !e.target.closest("button")) {
+      // on a focused button Enter already clicks it, so it must not also deal
+      if (phase === "betting") deal();
+      else if (phase === "over") newRound();
     }
   });
 
@@ -471,6 +479,7 @@
   els.soundToggleBtn.innerHTML = state.soundOn
     ? '<i class="fa-solid fa-volume-high"></i>'
     : '<i class="fa-solid fa-volume-xmark"></i>';
+  els.soundToggleBtn.setAttribute("aria-pressed", String(state.soundOn));
   updateHud();
   setControlsForPhase();
 })();
