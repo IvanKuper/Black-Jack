@@ -40,15 +40,25 @@ body {
   color: white;
 }
 .logo {
-  width: 2rem;
+  width: 3rem;
+  height: auto;
   border-radius: 4px;
+}
+.portfolio-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+}
+:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
 }
 .profilePic {
   width: 2.6rem;
   height: 2.6rem;
   object-fit: cover;
   border-radius: 100%;
-  margin-left: 0.75rem;
   border: 2px solid var(--gold);
 }
 a {
@@ -57,6 +67,34 @@ a {
 }
 a:hover {
   color: white;
+}
+.howto {
+  width: 100%;
+  max-width: 640px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+.howto summary {
+  cursor: pointer;
+  color: var(--gold-light);
+  font-weight: 700;
+}
+.howto p {
+  margin: 0.6rem 0 0;
+}
+kbd {
+  background: #24322b;
+  color: var(--gold-light);
+  border: 1px solid var(--panel-border);
+  border-radius: 5px;
+  padding: 0 0.4rem;
+}
+button.chip {
+  min-width: 0;
+  padding: 0;
 }
 
 /* ---------- Layout ---------- */
@@ -204,6 +242,12 @@ h1.title {
   animation: dealCard 0.4s ease forwards;
   animation-delay: var(--delay, 0s);
   position: relative;
+}
+
+.card.still {
+  animation: none;
+  opacity: 1;
+  transform: rotate(var(--rot, 0deg));
 }
 
 .card.red {

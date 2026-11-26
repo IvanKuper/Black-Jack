@@ -24,5 +24,6 @@ No install needed. Open `index.html` in a browser.
 
 ## Notes
 
+- Keys: H hit, S stand, D double down, Enter deal or next round.
 - Game state is stored in `localStorage` under the key `blackjack_state_v1`. Clear it, or press **Reset**, to start over.
 - Fonts and Bootstrap load from the internet, so you need a connection the first time.
