@@ -1,4 +1,4 @@
-// Font and icon CSS start as media=print so they do not hold up the first paint; switch them on once loaded.
+// Font CSS starts as media=print so it does not hold up the first paint; switch it on once loaded.
 document.querySelectorAll("link[data-async]").forEach((l) => {
   const on = () => (l.media = "all");
   if (l.sheet) on();
