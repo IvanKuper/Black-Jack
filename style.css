@@ -466,3 +466,17 @@ button.danger {
   .controls { width: 100%; }
   .controls button { flex: 1 1 40%; min-height: 44px; }
 }
+
+/* Inline SVG icons (Font Awesome Free 6.1.1, CC BY 4.0), sized like the old icon font */
+.icon {
+  display: inline-block;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  box-sizing: content-box;
+  overflow: visible;
+}
+
+.icon-2x {
+  font-size: 2em;
+}
